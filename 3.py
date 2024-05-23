@@ -66,6 +66,7 @@ def affine_cipher(text, a, b):
         if char in key:
             index = (a * key.index(char) + b) % key_len
             encrypted_text += key[index]
+            # print(key.index(char), char, "=", index, key[index])
         else:
             encrypted_text += char
     return encrypted_text
