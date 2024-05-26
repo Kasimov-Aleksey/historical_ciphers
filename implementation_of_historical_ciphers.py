@@ -1,6 +1,5 @@
 import random
 import json
-import itertools
 
 key = (
     "abcdefghijklmnopqrstuvwxyz"
@@ -102,21 +101,37 @@ def decrypt_recursive_affine_cipher(encrypted_text, a, b):
             decrypted_text += char
     return decrypted_text
 
+def compare_texts(file1, file2):
+    with open(file1, 'r') as f1, open(file2, 'r') as f2:
+        text1 = f1.read()
+        text2 = f2.read()
+
+    if text1 == text2:
+        print("Тексты совпадают.")
+    else:
+        print("Тексты не совпадают.")
+
 def main():
     print("Выберите шифр:")
     print("1. Простая замена")
     print("2. Аффинный шифр")
     print("3. Аффинный рекуррентный шифр")
     choice = input("Ваш выбор: ")
-    text = input("Введите текст: ")
+    encrypted_filename = 'encrypted_text.txt'
+    decrypted_filename = 'decrypted_text.txt'
+
 
     if choice == "1":
         print("Выберите действие:")
         print("1. Зашифровать")
         print("2. Расшифровать")
+        print("3. Проверить совпадение с исходным текстом")
         action = input("Ваш выбор: ")
 
         if action == "1":
+            input_filename = "input_text.txt"
+            with open(input_filename, 'r') as file:
+                text = file.read()
             shuffled_key = list(key)
             random.shuffle(shuffled_key)
             shuffled_key = ''.join(shuffled_key)
@@ -125,57 +140,87 @@ def main():
             print("Таблица замен сохранена в 'substitution_table.json'")
             encrypted_text = simple_substitution(text, substitution_table)
             print("Зашифрованный текст:", encrypted_text)
-            with open('encrypted_text.txt', 'w') as file:
+            with open(encrypted_filename, 'w') as file:
                 file.write(encrypted_text)
             print("Зашифрованный текст сохранен в 'encrypted_text.txt'")
         elif action == "2":
+            input_filename = "encrypted_text.txt"
+            with open(input_filename, 'r') as file:
+                text = file.read()
             substitution_table = load_substitution_table('substitution_table.json')
             reverse_table = generate_reverse_substitution_table(substitution_table)
             print("Таблица замен загружена из 'substitution_table.json'")
             decrypted_text = decrypt_simple_substitution(text, reverse_table)
             print("Расшифрованный текст:", decrypted_text)
-            with open('decrypted_text.txt', 'w') as file:
+            with open(decrypted_filename, 'w') as file:
                 file.write(decrypted_text)
             print("Расшифрованный текст сохранен в 'decrypted_text.txt'")
+        elif action == "3":
+            input_filename = "input_text.txt"
+            compare_texts(input_filename, decrypted_filename)
+
     elif choice == "2":
-        a = int(input("Введите коэффициент a: "))
-        b = int(input("Введите коэффициент b: "))
         print("Выберите действие:")
         print("1. Зашифровать")
         print("2. Расшифровать")
+        print("3. Проверить совпадение с исходным текстом")
         action = input("Ваш выбор: ")
+        if action == "1" or action == "2":
+            a = int(input("Введите коэффициент a: "))
+            b = int(input("Введите коэффициент b: "))
         if action == "1":
+            input_filename = "input_text.txt"
+            with open(input_filename, 'r') as file:
+                text = file.read()
             encrypted_text = affine_cipher(text, a, b)
             print("Зашифрованный текст:", encrypted_text)
-            with open('encrypted_text.txt', 'w') as file:
+            with open(encrypted_filename, 'w') as file:
                 file.write(encrypted_text)
             print("Зашифрованный текст сохранен в 'encrypted_text.txt'")
         elif action == "2":
+            input_filename = "encrypted_text.txt"
+            with open(input_filename, 'r') as file:
+                text = file.read()
             decrypted_text = decrypt_affine_cipher(text, a, b)
             print("Расшифрованный текст:", decrypted_text)
-            with open('decrypted_text.txt', 'w') as file:
+            with open(decrypted_filename, 'w') as file:
                 file.write(decrypted_text)
             print("Расшифрованный текст сохранен в 'decrypted_text.txt'")
+        elif action == "3":
+            input_filename = "input_text.txt"
+            compare_texts(input_filename, decrypted_filename)
+
     elif choice == "3":
-        a = int(input("Введите коэффициент a: "))
-        b = int(input("Введите коэффициент b: "))
         print("Выберите действие:")
         print("1. Зашифровать")
         print("2. Расшифровать")
+        print("3. Проверить совпадение с исходным текстом")
         action = input("Ваш выбор: ")
+        if action == "1" or action == "2":
+            a = int(input("Введите коэффициент a: "))
+            b = int(input("Введите коэффициент b: "))
         if action == "1":
+            input_filename = "input_text.txt"
+            with open(input_filename, 'r') as file:
+                text = file.read()
             encrypted_text = recursive_affine_cipher(text, a, b)
             print("Зашифрованный текст:", encrypted_text)
-            with open('encrypted_text.txt', 'w') as file:
+            with open(encrypted_filename, 'w') as file:
                 file.write(encrypted_text)
             print("Зашифрованный текст сохранен в 'encrypted_text.txt'")
         elif action == "2":
+            input_filename = "encrypted_text.txt"
+            with open(input_filename, 'r') as file:
+                text = file.read()
             decrypted_text = decrypt_recursive_affine_cipher(text, a, b)
             print("Расшифрованный текст:", decrypted_text)
-            with open('decrypted_text.txt', 'w') as file:
+            with open(decrypted_filename, 'w') as file:
                 file.write(decrypted_text)
             print("Расшифрованный текст сохранен в 'decrypted_text.txt'")
+        elif action == "3":
+            input_filename = "input_text.txt"
+            compare_texts(input_filename, decrypted_filename)
+
 
 if __name__ == "__main__":
     main()
-
