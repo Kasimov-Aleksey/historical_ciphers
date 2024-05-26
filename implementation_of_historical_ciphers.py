@@ -1,17 +1,15 @@
 import random
 import json
 
-# key = (
-#     "abcdefghijklmnopqrstuvwxyz"
-#     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-#     "0123456789"
-#     "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-#     "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-#     " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-# )
 key = (
-    "abcdefghijklmno"
+    "abcdefghijklmnopqrstuvwxyz"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "0123456789"
+    "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+    "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+    " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 )
+
 # Функция для генерации таблицы замен
 def generate_substitution_table(key, shuffled_key):
     substitution_table = {}
